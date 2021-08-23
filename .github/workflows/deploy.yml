@@ -7,19 +7,22 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       
-      - uses: actions/setup-node@v2.4.0
+      - name: Setup Node.js
+        uses: actions/setup-node@v2.4.0
         with:
            node_version: 14.x
-      
-      - uses: actions/cache@v2.1.6
+           
+      - name: Cache
+        uses: actions/cache@v2.1.6
         with:
           path: node_modules
           key: yarn
           upload-chunk-size: 200
           
-      - name: GitHub App token
+      - name: Generate App Token
         uses: tibdex/github-app-token@v1.0.2
         with:
           app_id: ${{ secrets.BOT_APP_ID }}
@@ -31,7 +34,7 @@ jobs:
          yarn
          yarn build
       
-      - name: Deploy (to diff dir)
+      - name: Deploy (to different directory)
         if: github.repository_owner != 'epic-yeet'
         uses: peaceiris/actions-gh-pages@v3.7.3
         with:
