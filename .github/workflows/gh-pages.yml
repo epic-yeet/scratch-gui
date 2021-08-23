@@ -35,28 +35,11 @@ jobs:
          yarn
          yarn build
       
-      - name: Deploy (to different directory)
-        if: github.repository_owner != 'epic-yeet' & github.GITHUB_EVENT_NAME == 'pull_request'
-        uses: peaceiris/actions-gh-pages@v3.7.3
-        with:
-          personal_token: ${{ steps.generate_token.outputs.token }}
-          publish_dir: ./build
-          external_repository: epic-yeet/epic-yeet.github.io
-          destination_dir: ./${{ github.repository_owner }}/${{ github.GITHUB_HEAD_REF }}
-          
-          
       - name: Deploy (in main repo)
         if: github.repository_owner == 'epic-yeet' & github.github_ref != 'refs/heads/develop'
         uses: peaceiris/actions-gh-pages@v3.7.3
         with:
           personal_token: ${{ steps.generate_token.outputs.token }}
           publish_dir: ./build
-          external_repository: epic-yeet/epic-yeet.github.io
+          external_repository: 'epic-yeet/epic-yeet.github.io'
           keep_files: true
-
-      - name: Deploy (in other repo develop)
-        if: github.repository_owner != 'epic-yeet' & github.GITHUB_EVENT_NAME != 'pull_request' & github.github_ref == 'refs/heads/develop'
-        uses: peaceiris/actions-gh-pages@v3.7.3
-        with:
-          personal_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
